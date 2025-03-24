@@ -9,15 +9,26 @@ body{
 .main{
     display: flex;
     flex-direction: column;
+    height: 80vh;
     justify-content: space-evenly;
     align-items: center;
     margin: 10vh;
 }
 
-.leftSide, .rightSide{
+#leftSide, #rightSide{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    font-size: 2em;
     width: 30vw;
     height: 10vh;
-    background-color: rgb(178, 45, 45);
+}
+
+#leftScore, #rightScore{
+    padding: 1em;
+    text-align: center;
+
 }
 
 .board{
@@ -44,8 +55,6 @@ body{
 }
 
 .replay{
-    padding-top: 0
-    ;
     margin-top: 10vh;
     font-size: 3em;
     border: none;
@@ -54,5 +63,6 @@ body{
 
 .replay:hover{
     cursor: pointer;
-    border: solid 5px transparent;
+    position: relative;
+    top: 3px
 }

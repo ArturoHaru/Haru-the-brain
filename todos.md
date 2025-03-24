@@ -1,5 +1,5 @@
 
+non permettere ai player di avere simboli uguali
 todo mostra l'ultima mossa
-todo l'alert distrae. Fai una schermata migliore
-todo rendi possibile cambiare i simboli
+aggiungi più simboli
 todo tasto per rendere il gioco multiplayer

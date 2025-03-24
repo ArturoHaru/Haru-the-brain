@@ -6,8 +6,16 @@ let turn = 0;
 let player_sign = "❌"
 let enemy_sign = "⭕"
 
+let player_wins = 0
+let enemy_wins = 0
+
 let multiplayer = false
 
+let leftPanel = document.getElementById("leftScore")
+let rightPanel = document.getElementById("rightScore")
+
+let selectPlayer = document.getElementById("player");
+let selectEnemy = document.getElementById("enemy");
 
 let combinations = [
     [0, 1, 2],
@@ -20,8 +28,79 @@ let combinations = [
     [2, 4, 6]
 ]
 
+
+let symbols = [
+    "❌",
+    "⭕",
+    "🐸",
+    "😄",
+    "🌟",
+    "🍀",
+    "🦄",
+    "🎮",
+    "🌍",
+    "💡",
+    "🐱",
+    "🚀",
+    "📚"
+]
+
 init()
 showDebug()
+
+/**
+ * true for player, false for enemy
+ */
+function changeSymbol(player, value){
+
+    fillSymbolLists()
+
+    if(player){
+        for(let i = 0; i < 9; i++){
+            if(board[i].innerHTML === player_sign){
+                board[i].innerHTML = value
+            }
+        }
+        player_sign = value
+        leftPanel.innerHTML = `${player_sign} ${player_wins}`
+
+        let partialSymbols = symbols.filter(emoji => emoji !== value)
+    
+        selectEnemy.innerHTML = ''
+
+        for (let i = 0; i < partialSymbols.length; i++){
+            let option = document.createElement("option");
+            option.value = partialSymbols[i];
+            option.innerHTML = partialSymbols[i];
+            selectEnemy.appendChild(option);
+        }
+
+        selectPlayer.value = value
+        selectEnemy.value = enemy_sign
+
+    }else{
+        for(let i = 0; i < 9; i++){
+            if(board[i].innerHTML === enemy_sign){
+                board[i].innerHTML = value
+            }
+        }
+        enemy_sign = value
+        rightPanel.innerHTML = `${enemy_sign} ${enemy_wins}`
+
+        
+        let partialSymbols = symbols.filter(emoji => emoji !== value)
+    
+        selectPlayer.innerHTML = ''
+        for (let i = 0; i < partialSymbols.length; i++){
+            let option = document.createElement("option");
+            option.value = partialSymbols[i];
+            option.innerHTML = partialSymbols[i];
+            selectPlayer.appendChild(option);
+        }
+        selectEnemy.value = value
+        selectPlayer.value = player_sign
+    }
+}
 
 function showDebug(){
     for (let i = 0; i < 9; i++){
@@ -35,6 +114,34 @@ function init(){
         board[i] = cell;
         cell.addEventListener("click", () => pick(cell));
     }
+
+    leftPanel.innerHTML = `${player_sign} ${player_wins}`
+    rightPanel.innerHTML = `${enemy_sign} ${enemy_wins}`
+
+    fillSymbolLists()
+}
+
+function fillSymbolLists(){
+
+    selectPlayer.innerHTML = ''
+    selectEnemy.innerHTML = ''
+
+    for (let i = 0; i < symbols.length; i++){
+        let option = document.createElement("option");
+        option.value = symbols[i];
+        option.innerHTML = symbols[i];
+
+        if(symbols[i] !== enemy_sign)
+            selectPlayer.appendChild(option);
+
+        if(symbols[i] !== player_sign)
+            selectEnemy.appendChild(option.cloneNode(true));
+    }
+
+    selectEnemy.value = enemy_sign
+    selectPlayer.value = player_sign
+    leftPanel.innerHTML = `${player_sign} ${player_wins}`
+    rightPanel.innerHTML = `${enemy_sign} ${enemy_wins}`
 }
 
 
@@ -128,14 +235,16 @@ function pick(cell){
 
 function check_if_player_won(){
     if(check_win(player_sign)){
-        alert(`${player_sign} wins!`)
+        player_wins++
+        leftPanel.innerHTML = `${player_sign} ${player_wins}`
         reset()
     }
 }
 
 function check_if_enemy_won(){
     if(check_win(enemy_sign)){
-        alert(`${enemy_sign} wins!`)
+        enemy_wins++
+        rightPanel.innerHTML = `${enemy_sign} ${enemy_wins}`
         reset()
         return true
     }

@@ -9,7 +9,11 @@
         <link rel="stylesheet" href="style.css">
     </head>
     <body>
-        <div class="leftSide"></div>
+        <div id="leftSide">
+            <em id="leftScore"></em>
+            <select name="player" id="player" onchange="changeSymbol(true, this.value)">
+            </select>
+        </div>
         <div class="main">
             <h1>Haru the Brain</h1>
             <div class="board">
@@ -24,8 +28,13 @@
                 <div class="cell" id="8"></div>
             </div>
             <button class="replay" onclick="reset()">🔄️</button>
+            <em>Restart</em>
         </div>
-        <div class="rightSide"></div>
+        <div id="rightSide">
+            <em id="rightScore"></em>
+            <select name="player" id="enemy" onchange="changeSymbol(false, this.value)">
+            </select>
+        </div>
 
         <script src="script.js" async defer></script>
 
