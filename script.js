@@ -46,7 +46,6 @@ let symbols = [
 ]
 
 init()
-showDebug()
 
 /**
  * true for player, false for enemy
